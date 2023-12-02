@@ -1,0 +1,63 @@
+
+
+{% extends 'bookshop/base.html' %}
+{% load static %}
+<title>{% block title %} Bookshop | Home{% endblock%}</title>
+{% block content %} 
+ 
+    <div class="ps-section pt-80 pb-30">
+     
+        <div class="ps-section__header text-center">
+            <h2 class="ps-section__title">Excluded books</h2>
+            <p>Books you didn't like were left out</p>
+        </div>
+        <div class="ps-section__content">
+            
+            <div class="row">
+                {% for product in deleted_products %}
+                <div class="col-lg-3 col-md-3 col-sm-10 col-xs-12 ">
+                        <div class="ps-product--fashion" style="    margin: 10px 14px">
+                                <div class="ps-product__thumbnail"><a class="ps-product__overlay" href="{% url 'product_detail' product.slug %}"></a>
+                                  <img class="lazy" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="" height= "270px";>
+                                    <ul class="ps-product__actions">
+                                        
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="ps-product__content"><a class="ps-product__title" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                                    <p class="ps-product__price">${{ product.price }}</p><br>
+                                    <form method="post" action="{% url 'set_book_preference' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <select name="preference" style="display:none">
+                                            
+                                            <option value="neutral">استرجاع</option>
+                                            
+                                        </select>
+                                        <button type="submit" value="neutral" style="width:130px;margin-left:80px">استرجاع</button>
+                                    </form>
+                                    
+                                </div>
+                               
+                                
+                                
+                        </div>
+                    </div>
+
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<div style='width:100%;     text-align: center;'>
+<button type="button" style="    width: 178px;
+height: 73px;" class="btn btn-primary"><a style="    font-size: 19px;" href="{% url 'product_list' %}">العودة إلى قائمة المنتجات</a></button>
+</div>
+<br>
+<br>
+<br>
+
+{% endblock %}

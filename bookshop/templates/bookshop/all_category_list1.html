@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Categories</title>
+</head>
+<body>
+    <h1>All Categories</h1>
+
+    {% for category in categories %}
+    <h2>{{ category.name }}</h2>
+    <ul>
+        {% for product in category.products.all %}
+            <li>{{ product.Title }} - {{ product.price }}</li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,191 @@
+{% extends 'bookshop/base.html' %}
+{% load static %}
+<title>{% block title %} Product Detail{% endblock%}</title>
+url{% block content %}
+
+    <div class="ps-hero">
+        <div class="container">
+            <h3>{{product.name }}</h3>
+            
+        </div>
+    </div>
+    <main class="ps-main">
+        <div class="ps-container">
+            <div class="ps-product--detail">
+                <div class="row">
+                    <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 ">
+                        <div class="ps-product__thumbnail">
+                            <div class="ps-product__preview">
+                                <div class="ps-product__variants">
+                                    <div class="item"><img src="{{ product.image.url }}" style="width:150px" alt=""></div>
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="ps-product__image">
+                                <div class="item"><img class="zoom" src="{{ product.image.url }}" alt="" data-zoom-image="images/shoe-detail/1.jpg" style="height:900px"></div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
+                        <div class="ps-product__info">
+                            <!-- <div class="ps-product__rating">
+                                <select class="ps-rating">
+                                   
+                                    <option value="1">1</option>
+                                    <option value="1">2</option>
+                                    <option value="1">3</option>
+                                    <option value="1">4</option>
+                                    <option value="2">5</option>
+                                </select><a href="#">(Read all 8 reviews)</a>
+                                    
+                            </div> -->
+                            <h1>{{ product.name }}</h1>
+                            
+                            <h3 class="ps-product__price"><span>$</span>{{product.price}}</h3>
+                            <p class="ps-product__category"><b>Category :</b>  {{ product.category}}</p>
+                            <div class="ps-product__short-desc">
+                                <p><b>Product Description :</b> {{ product.description }}</p>
+                            </div>
+                          <div class="ps-product__short-desc">
+                                <p><b>Page Count :</b> {{ product.Page_Count }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>Series :</b> {{ product.Series }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>Title :</b> {{ product.Title }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>Edition :</b>{{ product.Edition }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>Format :</b> {{ product.Format }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>Target audience :</b> {{ product.Target_audience }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b>published date :</b> {{ product.published_date }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b> ISBN :</b> {{ product.ISBN }}</p>
+                            </div>
+                            <div class="ps-product__short-desc">
+                                <p><b> Language :</b> {{ product.Language }}</p>
+                            </div>
+                           
+                            <form action="{% url 'cart_add' product.id  %}" method="post">
+                                {{ cart_product_form }}
+                                {% csrf_token %}
+                                <div class="ps-product__shopping">
+                                    <br>
+                                    <input class="ps-btn" type="submit" value="Add to cart">
+                                </div>
+                               
+                            </form>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="ps-product__content">
+                    <ul class="tab-list" role="tablist">
+                        <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">الكتب المرتبطة عند الشراء</a></li>
+                        <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">الكتب المشابهة</a></li>
+                        
+                       
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="tab_01">
+                       
+                       
+                    </div>
+                
+                    <div class="tab-pane " role="tabpanel" id="tab_02">
+                       
+    
+                        <div style="width:100%;     text-align: center;    font-size: 30px;font-weight: 900;"> الكتب المشابهة</div>
+                        
+                        <hr>
+                        <div class="ps-section__content">
+                            <div class="row">
+                               
+                      
+        {% if clustered_books %}
+        <h2>الكتب القريبة</h2>
+        {% for book in clustered_books %}
+            <div>
+                <h3>{{ book.Title }}</h3>
+                <!-- يمكنك عرض معلومات الكتاب القريب هنا -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>لا توجد كتب قريبة حاليًا.</p>
+    {% endif %}
+</div> </div>
+
+                       
+                       
+                    </div>
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </main>
+    <hr>
+    
+    <div style="width:100%;     text-align: center;    font-size: 30px;font-weight: 900;">الكتب المرتبطة عند الشراء</div>
+    <br>
+    <hr>
+    <div class="ps-section__content">
+        <div class="row">
+           
+      
+        
+            {% for related_book in related_books %}
+            <div class="col-lg-3 col-md-3 col-sm-10 col-xs-12 ">
+                <div class="ps-product--fashion" style="    margin: 10px 14px">
+                        <div class="ps-product__thumbnail"><a class="ps-product__overlay" href="{% url 'product_detail' product.slug %}"></a>
+                          <img class="lazy" src="{% if related_book.image %}{{ related_book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="" height= "270px";>
+                            <ul class="ps-product__actions">
+                                
+                            </ul>
+                        </div>
+
+                        
+                        <div class="ps-product__content"><a class="ps-product__title" href="{% url 'product_detail' related_book.slug %}">{{ related_book.name }}</a>
+                            <p class="ps-product__price">${{ product.price }}</p><br>
+                            <form method="post" action="{% url 'set_book_preference' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ related_book.id }}">
+                                <select name="preference">
+                                    <option value="important">مهم</option>
+                                    <option value="exclude">استبعاد</option>
+                                    <option value="neutral">بدون تمييز</option>
+                                </select>
+                                <button type="submit">تعيين التفضيل</button>
+                            </form>
+                            
+                        </div>
+                       
+                        
+                        
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+    
+
+
+
+
+{% endblock %}
+

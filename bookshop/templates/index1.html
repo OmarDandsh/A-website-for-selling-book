@@ -1,0 +1,36 @@
+{% extends 'bookshop/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+  <h1 class="text-center mt-5">Book Price Prediction</h1>
+<br>
+
+  
+
+
+
+<div class="ps-section__content">
+    <div class="row">
+        {% for product, predicted_price in products_with_prices %}
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                <div class="ps-product--fashion">
+                        <div class="ps-product__thumbnail"><a class="ps-product__overlay" href="{% url 'product_detail' product.slug %}"></a><img class="lazy" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="" height= "270px";>
+                            <ul class="ps-product__actions">
+                                
+                            </ul>
+                        </div>
+                        <div class="ps-product__content"><a class="ps-product__title" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                            <p class="ps-product__price">Price:<span style='color:Green ;margin-right:10px'>${{ product.price }}</span></p>
+                            <p class="ps-product__price" >Predicted Price: <span style='color:red'>${{ predicted_price }}</span></p>
+                            
+                        </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+</div>
+
+{% endblock %}

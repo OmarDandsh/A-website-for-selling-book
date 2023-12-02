@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات المجمعة</title>
+</head>
+<body>
+    <h1>المنتجات المجمعة</h1>
+    {% for cluster in clustered_products %}
+        <h2>مجموعة {{ forloop.counter }}</h2>
+        <ul>
+            {% for product in cluster %}
+                <li><a href="{{ product.get_absolute_url }}">{{ product.Title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>

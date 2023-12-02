@@ -1,0 +1,22 @@
+{% for book in books %}
+    <div>
+        <h2><a href="{% url 'book_detail' book.slug %}">{{ book.Title }}</a></h2>
+        <img src="{{ book.image.url }}" alt="{{ book.Title }}">
+        <p>{{ book.description|truncatewords:30 }}</p>
+    </div>
+{% endfor %}
+
+<div>
+    <h1>{{ book.Title }}</h1>
+    <img src="{{ book.image.url }}" alt="{{ book.Title }}">
+    <p>{{ book.description }}</p>
+</div>
+
+<h2>الكتب المشتراة مع هذا الكتاب:</h2>
+{% for order_item in related_order_items %}
+    <div>
+        <h3><a href="{% url 'book_detail' order_item.product.slug %}">{{ order_item.product.Title }}</a></h3>
+        <img src="{{ order_item.product.image.url }}" alt="{{ order_item.product.Title }}">
+        <p>{{ order_item.product.description|truncatewords:30 }}</p>
+    </div>
+{% endfor %}
